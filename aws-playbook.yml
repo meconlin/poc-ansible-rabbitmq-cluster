@@ -1,0 +1,22 @@
+---
+- hosts: all
+  become: true
+  vars:
+    - rabbitmq_config_custom: true
+    - rabbitmq_config_dir: '/etc/rabbitmq'
+    - rabbitmq_debian_repo: 'deb http://admin.vpc.team.getgoing.com/repos/getgoing getgoing main'
+    #- config_rabbitmq_ha: false         # not using roles tasks for this (it creates queues and exhcanges), using local task
+    - enable_rabbitmq_clustering: true
+    - cluster_partition_handling: pause_minority
+    - rabbitmq_master: 'ip-192-168-4-64'
+    - rabbitmq_ha_policy: true
+      tags:
+        ha-mode: all
+        ha-sync-mode: automatic
+  roles:
+    - role: ansible-rabbitmq
+  post_tasks:
+    - include: tasks/rabbitmq_config.yml
+      when: rabbitmq_config_custom
+    - include: tasks/rabbitmq_ha_policy.yml
+      when: rabbitmq_ha_policy

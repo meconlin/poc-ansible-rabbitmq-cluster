@@ -1,0 +1,39 @@
+---
+
+# update hosts file so that the vagrant nodes can find each other
+- hosts: all
+  become: true
+  vars:
+    - pri_domain_name: 'test.vagrant.local'
+  roles:
+  tasks:
+    - name: updating /etc/hosts
+      lineinfile:
+        dest: /etc/hosts
+        regexp: "^{{ hostvars[item].ansible_ssh_host }} {{ item }} {{ item }}.{{ pri_domain_name }}"
+        line: "{{ hostvars[item].ansible_ssh_host }} {{ item }} {{ item }}.{{ pri_domain_name }}"
+        insertbefore: BOF
+        state: present
+      with_items: groups['all']
+
+- hosts: all
+  become: true
+  vars:
+    - rabbitmq_config_custom: true
+    - rabbitmq_config_dir: '/etc/rabbitmq'
+    #- config_rabbitmq_ha: false         # not using roles tasks for this (it creates queues and exhcanges), using local task
+    - enable_rabbitmq_clustering: true
+    - cluster_partition_handling: pause_minority # if a node finds itself in the minority, it will not accept tasks
+    - pri_domain_name: 'test.vagrant.local'
+    - rabbitmq_master: 'node0'
+    - rabbitmq_ha_policy: true
+      tags:
+        ha-mode: all
+        ha-sync-mode: automatic
+  roles:
+    - role: ansible-rabbitmq
+  post_tasks:
+    - include: tasks/rabbitmq_config.yml
+      when: rabbitmq_config_custom
+    - include: tasks/rabbitmq_ha_policy.yml
+      when: rabbitmq_ha_policy

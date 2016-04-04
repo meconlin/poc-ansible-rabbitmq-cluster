@@ -1,0 +1,24 @@
+- name: rabbitmq_config | updating rabbitmq.config
+  template:
+    src: rabbitmq.config.j2
+    dest: "{{ rabbitmq_config_dir }}/rabbitmq.config"
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes #backing up in case the need to recover
+  register: configresult
+
+- name: rabbitmq_config | updating rabbitmq-env.conf
+  template:
+    src: rabbitmq-env.config.j2
+    dest: "{{ rabbitmq_config_dir }}/rabbitmq-env.conf"
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes #backing up in case the need to recover
+
+- name: rabbitmq_config | restarting rabbitmq-server
+  service:
+    name: rabbitmq-server
+    state: restarted
+  when: configresult.changed

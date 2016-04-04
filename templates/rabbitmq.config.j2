@@ -1,0 +1,14 @@
+{% raw %}
+[
+ {rabbit,
+  [
+   {
+{% endraw %}
+{% if cluster_partition_handling is defined %}
+cluster_partition_handling, {{cluster_partition_handling}}
+{% endif %}
+{% raw %}
+   }
+  ]}
+].
+{% endraw %}
