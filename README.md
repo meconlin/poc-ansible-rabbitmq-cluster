@@ -59,10 +59,10 @@ Security Group Rules for instances
 
 | Type  | Protocol | Port Range | Source |
 | ------------- | ------------- | ------ | ---- |
-| All traffic  | All  | All | this security group
-| SSH  | TCP  | 22 | 0.0.0.0/0
-| Custom TCP Rule | TCP  | 5672 | 0.0.0.0/0
-| Custom TCP Rule | TCP  | 15672 | 0.0.0.0/0
+| All traffic  | All  | All | this security group |
+| SSH  | TCP  | 22 | 0.0.0.0/0 |
+| Custom TCP Rule | TCP  | 5672 | 0.0.0.0/0 |
+| Custom TCP Rule | TCP  | 15672 | 0.0.0.0/0 |
 
 
 Run the AWS playbook
