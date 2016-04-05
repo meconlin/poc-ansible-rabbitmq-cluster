@@ -1,3 +1,0 @@
----
-# file: aws-cluster.yml
-- include: aws-rabbits.yml

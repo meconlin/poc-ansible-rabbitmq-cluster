@@ -55,8 +55,15 @@ Playing with AWS
 ---
 You will have to launch nodes you can access with your key and that share a security group that allows them to see each other
 
-TODO:
-- mark to define AWS security group rules for RabbitMQ clustering
+Security Group Rules for instances
+
+| Type  | Protocol | Port Range | Source |
+| ------------- | ------------- | ------ | ---- |
+| All traffic  | All  | All | <this group>
+| SSH  | TCP  | 22 | 0.0.0.0/0
+| Custom TCP Rule | TCP  | 5672 | 0.0.0.0/0
+| Custom TCP Rule | TCP  | 15672 | 0.0.0.0/0
+
 
 Run the AWS playbook
 ```

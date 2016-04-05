@@ -1,3 +1,0 @@
----
-# file: cluster.yml
-- include: rabbits.yml

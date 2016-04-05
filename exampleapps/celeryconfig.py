@@ -1,3 +1,10 @@
+from kombu import Exchange, Queue
+
+CELERY_DEFAULT_QUEUE = 'test-ha-queue'
+CELERY_QUEUES = (
+    Queue('test-ha-queue', Exchange('test-ha-queue'), routing_key='test-ha-queue'),
+)
+
 USER = 'rabbitmqadmin'
 PASSWD = 'rabbitmqadmin'
 HOST = 'localhost'

@@ -1,5 +1,5 @@
 ---
-- hosts: rabbits 
+- hosts: rabbits
   become: true
   vars:
     - rabbitmq_config_custom: true
