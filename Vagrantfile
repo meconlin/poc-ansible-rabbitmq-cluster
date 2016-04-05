@@ -43,7 +43,7 @@ Vagrant.configure(2) do |config|
         node.vm.provision "ansible" do |ansible|  #runs Ansible playbook for installing roles/executing tasks
           ansible.limit = "all"
           ansible.inventory_path = "vagrant-inventory.ini"
-          ansible.playbook = "playbook.yml"
+          ansible.playbook = "cluster.yml"
           #ansible.verbose = 'vvvv'
         end
       end

@@ -1,16 +1,17 @@
 POC Ansible install of HA RabbitMQ Cluster
 =========
 
-Installs rabbitmq https://www.rabbitmq.com/ (Configurable...HA and Clustering ready).   
+Installs rabbitmq https://www.rabbitmq.com/ configured for a cluster.   
 
 Extends an existing role to:
 - installs and configures clustered RabbitMQ on N nodes in your inventory file
 - will apply HA policy  ```ha-all`` to all queues created
 - sync mode is automatic
-- cluster_partition_handling is set to pause_minority
+- ```cluster_partition_handling``` is set to ```pause_minority```
 
 It can install either into a Vagrant or AWS.  
 An example python celery application exists in /exampleapps to experiment with.
+You can kill nodes and see how Celery and the RabbitMQ cluster respond.
 
 Playing with Vagrant
 -------
@@ -35,13 +36,13 @@ Now spin up your environment...
 ````
 vagrant up
 ````
-Re-run vagrant playbook ```playbook.yml```...  
+Re-run vagrant playbook ```cluster.yml```...  
 ```
 vagrant provision
 ```
 OR
 ```
-ansible-playbook playbook.yml -i vagrant-inventory.ini --private-key=/Users/mark/.ssh/vagrant -v
+ansible-playbook cluster.yml -i vagrant-inventory.ini --private-key=/Users/mark/.ssh/vagrant -v
 ```
 
 When you are done testing, tear it all down...  
@@ -59,5 +60,5 @@ TODO:
 
 Run the AWS playbook
 ```
-ansible-playbook -i aws-stage-inventory.ini --private-key=/Users/mark/.ssh/gg_rsa --user=mconlin aws-stage-main.yml
+ansible-playbook -i aws-stage-inventory.ini --private-key=/Users/mark/.ssh/gg_rsa --user=mconlin aws-cluster.yml
 ```
